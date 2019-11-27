@@ -1,0 +1,26 @@
+.calculatorContainer {
+  display: grid;
+  width: 30vw;
+  height: 75vh;
+  border: 1px solid #000;
+  border-radius: 15px;
+  padding: 25px;
+  grid-template-rows: 30% auto;
+
+}
+.buttonArea {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-gap: 10px;
+  place-items: stretch;
+}
+
+.buttonArea > div {
+  border: 1px solid #000;
+}
+
+.display {
+  border: 1px solid #000;
+  margin: 0px 0px 25px 0px;
+}
