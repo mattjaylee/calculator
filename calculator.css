@@ -6,6 +6,9 @@
   border-radius: 15px;
   padding: 25px;
   grid-template-rows: 30% auto;
+  background-color: grey;
+  margin-left: auto;
+  margin-right: auto;
 
 }
 .buttonArea {
@@ -13,14 +16,39 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-gap: 10px;
-  place-items: stretch;
 }
 
-.buttonArea > div {
+.button {
   border: 1px solid #000;
+  display: grid;
+  place-items: center;
+  background-color: Gainsboro;
+  font-family: Arial;
+  font-weight: 550;
+  border-radius: 15px;
 }
 
 .display {
   border: 1px solid #000;
+  border-radius: 15px;
   margin: 0px 0px 25px 0px;
+  display: grid;
+  place-items: center;
+  background-color: Floralwhite;
+  font-family: Arial;
+  font-weight: 550;
+}
+
+.delete {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.clear {
+  grid-column-start: 3;
+  grid-column-end: 5;
+}
+
+.\= {
+  background-color: orange;
 }
