@@ -49,7 +49,9 @@ makeButtons();
 //will loop through the input until it operates all the muliplication and
 //division operations and leaves only addition and subtraction then will
 //move on to finish with addition and subtraction and return the answer
-let decimal = 2;
+let decimal = 0;
+let decimalExists;
+let doubleDecimal;
 function operate(input){
   let lastOperator;
   let nextOperator;
@@ -67,9 +69,12 @@ function operate(input){
       }
       nextOperator = findNextOperator(i, input);
       operation = findOperation(input, i, lastOperator, nextOperator);
-      if (operation == 'cannot divide by 0'){
+      if (operation == 'cannot divide by 0' || operation == 'Infinity'){
         return 'Cannot divide by 0';
         break;
+      }
+      if (operation == 'doubleDecimal'){
+        return 'Please enter a valid equation';
       }
       input = input.slice(0, lastOperator + 1) + operation + input.slice(nextOperator);
       i = 0;
@@ -84,6 +89,9 @@ function operate(input){
       }
       nextOperator = findNextOperator(i, input);
       operation = findOperation(input, i, lastOperator, nextOperator);
+      if (operation == 'doubleDecimal'){
+        return 'Please enter a valid equation';
+      }
       input = input.slice(0, lastOperator + 1) + operation + input.slice(nextOperator);
       i = 0;
     }
@@ -95,12 +103,18 @@ function operate(input){
   //if the answer is an integer it will return an integer instead of a float
   //ending in .00
   else{
-    input = parseFloat(input).toFixed(decimal);
-    if (input[input.length - 1] == '0' && input[input.length - 2] == '0'){
-      return parseInt(input);
+    if (decimalExists){
+      input = parseFloat(input).toFixed(decimal);
+      return input
     }
     else {
-      return input;
+      input = parseFloat(input).toFixed(2);
+      if (input[input.length - 1] == '0' && input[input.length - 2] == '0'){
+          return parseInt(input);
+        }
+      else {
+        return input;
+      }
     }
   }
 }
@@ -146,7 +160,13 @@ function findNextOperator(index, string){
 function findDecimal(input){
   for (i = 0; i < input.length; i++){
     if (input[i] == '.'){
-      let newDecimal = input.length -i - 1;
+      for (k = i + 1; k < input.length; k++){
+        if (input[k] == '.'){
+          doubleDecimal = true;
+        }
+      }
+      decimalExists = true;
+      let newDecimal = input.length - i - 1;
       if (newDecimal > decimal){
         decimal = newDecimal;
       }
@@ -162,11 +182,13 @@ function findOperation(string, operator, lastOperator, nextOperator){
   //calls the findDecimal function to save the operation precision
   findDecimal(firstHalf);
   findDecimal(lastHalf);
+  if (doubleDecimal){
+    return 'doubleDecimal';
+  }
   switch(string[operator]){
     case '/':
       if (lastHalf === '0'){
         return 'cannot divide by 0';
-        break;
       }
       else {
         innerOperation = parseFloat(firstHalf) / parseFloat(lastHalf);
